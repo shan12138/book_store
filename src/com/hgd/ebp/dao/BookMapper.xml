@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.hgd.ebp.dao.BookMapper">
+    <insert id="sendComment" parameterType="commentBean">
+       INSERT INTO comments(bid,uid,comments) values (#{bid},#{uid},#{comments})
+    </insert>
+    <select id="queryMaxCount" parameterType="java.util.Map" resultType="int">
+        SELECT COUNT(bid) FROM books 
+        <where>
+        	<choose>
+        		<when test = "endTime != null and endTime != ''">
+        			<choose>
+        				<when test = " beginTime != null and beginTime != ''">
+        					publishTime between #{beginTime} and #{endTime}
+        					<if test=" keyWord  != null and !''.equals(keyWord) ">
+				        		and (bname = #{keyWord} or author = #{keyWord})
+				        	</if>
+        				</when>
+        				<otherwise>
+        					publishTime &lt;= #{endTime}
+        					<if test=" keyWord  != null and !''.equals(keyWord) ">
+				        		and (bname = #{keyWord} or author = #{keyWord})
+				        	</if>
+        				</otherwise>
+        			</choose>
+        		</when>
+        		<otherwise>
+        			<choose>
+	        			<when test = " beginTime != null and beginTime != '' ">
+	        				publishTime &gt;= #{beginTime}
+	        				<if test=" keyWord  != null and !''.equals(keyWord) ">
+				        		and (bname = #{keyWord} or author = #{keyWord})
+				        	</if>
+	        			</when>
+	        			<otherwise>
+	        				<if test=" keyWord  != null and !''.equals(keyWord) ">
+			        		bname = #{keyWord} or author = #{keyWord}
+			        		</if>
+	        			</otherwise>
+        			</choose>
+        		</otherwise>
+        	</choose>
+        </where> 
+    </select>
+
+    <select id="queryByPage" parameterType="java.util.Map" resultType="book">
+        SELECT * FROM books 
+    <where>
+        <choose>
+       		<when test = "endTime != null and endTime != ''">
+       			<choose>
+       				<when test = " beginTime != null and beginTime != ''">
+       					publishTime between #{beginTime} and #{endTime}
+       					<if test=" keyWord  != null and !''.equals(keyWord) ">
+				        	and (bname = #{keyWord} or author = #{keyWord})
+				        </if>
+       				</when>
+       				<otherwise>
+       					publishTime &lt;= #{endTime}
+       					<if test=" keyWord  != null and !''.equals(keyWord) ">
+				        	and (bname = #{keyWord} or author = #{keyWord})
+				        </if>
+       				</otherwise>
+       			</choose>
+        	</when>
+       		<otherwise>
+       			<choose>
+        			<when test = " beginTime != null and beginTime != '' ">
+        				publishTime &gt;= #{beginTime}
+        				<if test=" keyWord  != null and !''.equals(keyWord) ">
+			        		and (bname = #{keyWord} or author = #{keyWord})
+			        	</if>
+        			</when>
+        			<otherwise>
+        				<if test=" keyWord  != null and !''.equals(keyWord) ">
+		        		bname = #{keyWord} or author = #{keyWord}
+		        	</if>
+        			</otherwise>
+       			</choose>
+       		</otherwise>
+       	</choose>
+        </where> 
+         ORDER BY bid DESC
+         LIMIT #{startRow}, #{rowCount}
+    </select>
+    
+     <select id="getComments" parameterType="int" resultType="commentBean">
+       SELECT comments.*,username FROM comments,users WHERE bid = #{bid} and comments.uid = users.uid
+       ORDER BY commentTime DESC
+    </select>
+    
+    <select id="selectBook" parameterType="int" resultType="book">
+       SELECT * FROM books WHERE bid = #{bid}
+    </select>
+    
+    <select id="selectPrice" parameterType="int" resultType="double">
+       SELECT price FROM books WHERE bid = #{bid}
+    </select>
+    
+    <select id="selectBname" parameterType="int" resultType="String">
+       SELECT bname FROM books WHERE bid = #{bid}
+    </select>
+    
+    
+    <insert id="insert" parameterType="book" useGeneratedKeys="true" keyProperty="bid">
+        INSERT INTO books (bname,image,author,descp,price,publisher,publishTime,type) values 
+        (#{bname},#{image},#{author},#{descp},#{price},#{publisher},#{publishTime},#{type})
+    </insert>
+    
+    <update id="update" parameterType="book">
+        UPDATE books SET bname=#{bname}, image=#{image}, author=#{author}, 
+        descp=#{descp} , price=#{price} ,publisher=#{publisher} ,publishTime=#{publishTime}
+        ,type=#{type} WHERE bid=#{bid}
+    </update>
+    
+</mapper>

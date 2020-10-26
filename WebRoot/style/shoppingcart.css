@@ -1,0 +1,69 @@
+body{
+	width:100%;
+	height:100%;
+}
+#container{
+	width:100%;
+	height:100%;
+}
+#J_Order{
+	width:100%;
+	height:20%;
+	border:1px solid #ded8d8;
+	margin-bottom:15px;
+}
+#J_Item{
+	width:100%;
+	height:100%;
+}
+.item-content clearfix{
+	display: block;
+    overflow: hidden;
+	white-space:nowrap;
+}
+li{
+	float:left;
+	display: inline-block;
+	list-style: none;
+	 margin-left: 35px;
+}
+.table td{
+	border:1px solid #e9ecf1;
+}
+
+.container-fluid{
+	width:100%;
+	height:100%;
+	
+}
+.row-fluid{
+	width:100%;
+	height:200px;
+	float:left;
+}
+.recomment{
+	width:100%;
+	height:auto;
+	min-height:300px;
+	/*position:absolute;*/
+	float:left;
+	padding-bottom:0;
+	
+}
+.gallery{
+	width:25%;
+	height:200px;
+	float:left;
+}
+.re-img{
+	width:100%;
+	height:70%;
+	float:left;
+	padding-top:10px;
+}
+.re-info{
+	width:100%;
+	height:30%;
+	float:left;
+	padding-top:10px;
+}

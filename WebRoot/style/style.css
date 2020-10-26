@@ -1,0 +1,99 @@
+@CHARSET "GBK";
+
+body{
+	font-size: 16px;
+    font-family:sans-serif; 
+    background: #FFFFFF;
+}
+
+.error{
+	color: #ff3333;
+	font-size: 13px;
+	font-style: italic;
+	text-align: left;
+}
+
+<!--userinfor-->
+.table table-hover{
+	width:90%£»align:center;
+	border:1px solid #faf5f5;
+}
+#main-header h1{
+	color: #ff3333;
+	border-bottom-color: black;
+	position:none;
+}
+.table-bordered td{
+	border: none;
+}
+
+<!--useraccount-->
+
+#accounttable{
+	text-align:center;
+	 width:100%;
+	 height:60px;
+	 align:center;
+}
+
+#accountform{
+	width:100%; 
+	height:500px;
+}
+
+#chargebutton{
+	width:50%;
+	height:30px;
+	align:center;
+}
+a, a:link, a:visited{
+	color:black;
+    text-decoration: none;
+}
+.form_input{
+	width:50px;
+	height:30px;
+}
+.form_submit{
+	 width: 80px;
+	 height: 30px;
+	 background-color:#ccffff;
+	 margin-left:50px;
+}
+
+a:hover{
+	color:red;
+}
+.nav-link{
+	font-size:20px;
+}
+.err_msg{
+	text-align: center;
+	font-size: 15px; font-style: italic;
+	color: red;
+}
+.succ_msg{
+	text-align: center;
+	font-size: 15px; font-style: italic;
+	color: blue;
+}
+.ticketForm input{
+	border-radius:5px; 
+	border:1px solid #666666;
+	width:200px;height:30px;
+	margin-left:50px;
+	margin-top:20px;
+}
+.Form p{
+	margin-top:20px;
+}
+.table table-hover{
+	 width:90%;align:center;
+	 border:1px solid black;
+}
+.bookType{
+	margin-left:50px;
+	width:200px;
+	border-radius:5px; 
+	border:1px solid #666666;
+}

@@ -1,0 +1,180 @@
+@charset "utf-8";
+
+body{
+    font-size: 16px;
+    font-family: "宋体", Helvetica, sans-serif; 
+    background: #FFFFFF;
+}
+
+#page{
+    	margin: 0 auto; width: 1000px; height: 100%;
+	}
+	
+#page_login{
+    	margin: 0 auto; width: 100%; height: 100%;
+	}	
+
+	#header{
+    margin: 10px 0 0 0; height: 125px;
+   
+}
+
+#logo{
+    width: 200px; height: 112px; float: left;
+    background: #FFFFFF; padding: 14px 0 0 0;
+    text-align: left; 
+}
+
+#main_body{
+    height: 500px;
+    
+}
+
+#page_login{
+    	margin: 0 auto; width: 100%; height: 100%;
+	}
+	
+	
+#main_body_login{
+    background: url('../images/login.jpg');
+    overflow: hidden;
+    position: fixed;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    
+}
+
+#main_body_register{
+    background: url('../images/login.jpg');
+    overflow: hidden;
+    position: fixed;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    
+}
+
+
+#login_image{
+	width: 40%; height: 300px;
+    margin-top: 60px; 
+    margin-left: auto;
+    float: left;
+
+}
+
+#login_form{
+	width: 40%; height: 300px;
+    position: absolute;
+   	top: 40%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+   	-moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#login_form input text{
+	width: 250px; height: 18px;
+}
+
+#login_form input submit{
+	width: 500px; height: 18px;
+}
+
+#login_form tr{
+	 height: 60px;
+}
+
+#register_form{
+	width: 40%; height: 300px;
+    position: absolute;
+   	top: 30%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+   	-moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#register_form tr{
+	 height: 50px;
+}
+
+#register_form input submit{
+	width: 500px; height: 18px;
+}
+
+#register_form input reset{
+	width: 80px; height: 18px;
+}
+
+
+.inputbox{ 
+	background:rgba(240,255,255,0.5);
+	border:1px solid #ffffff;
+	height:30px;
+	width:300px;
+	border-radius:10px;
+}
+.inputsubmit{
+	width:300px;
+	border-radius:10px;
+	background:#4169e1;
+	height:40px;
+	align:center;
+	color:#FFFFFF;
+} 
+
+.registersubmit{
+	width:300px;
+	border-radius:10px;
+	background:#32CD32;
+	height:40px;
+	align:center;
+	color:#FFFFFF;
+} 
+
+.register_reset{
+	width:80px;
+	border-radius:10px;
+	background:#E1FFFF;
+	height:40px;
+	align:center;
+	color:red;
+} 
+
+
+#footer{
+	width: 100%; height: 40px; float: center;
+    text-align: center;
+    position:fixed;
+    bottom:0;
+    border:  0.5px solid #333333; 
+}
+
+.err_msg{
+	text-align: left;
+	font-size: 16x; font-style: italic;
+	color: red;
+}
+
+.center-in-center{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+  }
+  
+a, a:link, a:visited{
+    text-decoration: none;
+    color: blue;
+}
+

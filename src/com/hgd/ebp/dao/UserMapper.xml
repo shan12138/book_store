@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hgd.ebp.dao.UserMapper">
+
+	<resultMap type="com.hgd.ebp.domain.User" id="user">  
+        <result property="uname" column="name" /> 
+        <result property="userName" column="username" /> 
+        <result property="idCard" column="idcard" /> 
+        <result property="telNo" column="telno" />  
+        <result property="regTime" column="regtime" /> 
+    </resultMap> 
+    <resultMap type="com.hgd.ebp.domain.UserOrders" id="userorders">  
+    <result property="descp" column="bname" />  
+    </resultMap> 
+   <resultMap type="com.hgd.ebp.domain.Order" id="orders">  
+    </resultMap> 
+    <resultMap type="java.lang.Integer" id="integer">  
+    </resultMap> 
+    
+    <select id="queryMaxCount" parameterType="com.hgd.ebp.state.UserOrdersQueryState" resultType="int">
+        select count(*) from orders where uid=#{uid}
+    </select>
+
+    <update id="updateUserInfor" parameterType="com.hgd.ebp.vi.RenewUserBean" >
+        update users set password=#{password} ,name=#{uname} ,gender=#{gender} ,idcard=#{idCard},address=#{address},telno=#{telNo}, images=#{images}
+         where  uid=#{uid}
+    </update>
+    
+     <update id="updateUserInforNoPassword" parameterType="com.hgd.ebp.vi.RenewUserBean" >
+        update users set name=#{uname} ,gender=#{gender} ,idcard=#{idCard},address=#{address},telno=#{telNo}, images=#{images}
+         where  uid=#{uid}
+    </update>
+    
+    <select id="queryByPage" parameterType="java.util.Map" resultMap="orders">
+        select * from orders where  uid=#{uid}
+         LIMIT #{startRow}, #{rowCount}
+    </select>
+    
+    <update id="updateUserAccount" parameterType="java.util.Map" >
+        update users set balance = #{balance} where uid = #{uid}
+    </update>
+    
+     <select id="selectByOid" parameterType="int" resultMap="userorders" >
+        select * from orderlist where oid = #{oid}
+    </select>
+    
+    <select id="selectUserById" parameterType="int" resultMap="user" >
+        select * from users where uid = #{uid}
+    </select>
+    
+    <select id="userlogin" parameterType="com.hgd.ebp.vi.UserBean" resultMap="integer">
+        select uid from users where username=#{userName} and password=#{upassword}
+    </select>
+    
+    <insert id="userregister" parameterType="com.hgd.ebp.domain.User" >
+        insert into users(username,password,name,gender,idcard,address,telno,balance,status)
+        values(#{userName},#{password},#{uname},#{gender},#{idCard},#{address},#{telNo},0,1)
+    </insert>
+     
+</mapper>

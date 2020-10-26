@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hgd.ebp.dao.OrdersMapper">
+	<resultMap type="com.hgd.ebp.domain.Order" id="orders">  
+    </resultMap> 
+       
+    
+    <select id="queryMaxCount" parameterType="java.util.Map" resultType="int">
+        SELECT count(oid) FROM user_order
+         <where>
+         <choose>
+        		<when test = "!''.equals(name) and name != null ">
+        			((( name = #{name} ) or ( username=#{name} ))
+        			<choose>
+        				<when test = "idcard != null and !''.equals(idcard)">
+        					and idcard = #{idcard}
+        					<choose>
+        						<when test="oid != null and oid !=0">
+        							 and oid = #{oid} )
+        						</when>
+        						<otherwise>)</otherwise>
+        					</choose>
+        				</when>
+        				<otherwise>
+        					<if test="oid != null and oid !=0">
+        					and oid = #{oid} 
+        					</if>
+        					)
+        				</otherwise>
+        			</choose>
+        		</when>
+        		<otherwise>
+        			<choose>
+        				<when test = "idcard != null and !''.equals(idcard)">
+        						 idcard = #{idcard}
+        						<if test="oid != null and oid !=0">
+        							 and oid = #{oid}
+        						</if>
+        				</when>
+        				<otherwise>
+        					<if test="oid != null and oid !=0">
+        					 oid = #{oid} 
+        					</if>
+        				</otherwise>
+        			</choose>
+        		</otherwise>
+        	</choose>
+          <choose>
+        		<when test = "endTime != null and endTime != ' 23:59:59' ">
+        			<choose>
+        				<when test = " beginTime != null and beginTime != '' ">
+        					commitTime between #{beginTime} and #{endTime}
+        				</when>
+        				<otherwise>
+        					commitTime &lt;= #{endTime}
+        				</otherwise>
+        			</choose>
+        		</when>
+        		<otherwise>
+        			<if test = " beginTime != null and beginTime != '' ">
+        				commitTime &gt;= #{beginTime}
+        			</if>
+        		</otherwise>
+        	</choose>
+        </where>
+    </select>
+ 
+    <select id="queryByPage" parameterType="java.util.Map" resultMap="orders">
+         SELECT * FROM user_order
+       <where>
+          	<choose>
+        		<when test = "!''.equals(name) and name != null ">
+        			((( name = #{name} ) or ( username=#{name} ))
+        			<choose>
+        				<when test = "idcard != null and !''.equals(idcard)">
+        					and idcard = #{idcard}
+        					<choose>
+        						<when test="oid != null and oid !=0">
+        							 and oid = #{oid} )
+        						</when>
+        						<otherwise>)</otherwise>
+        					</choose>
+        				</when>
+        				<otherwise>
+        					<if test="oid != null and oid !=0">
+        					and oid = #{oid} 
+        					</if>
+        					)
+        				</otherwise>
+        			</choose>
+        		</when>
+        		<otherwise>
+        			<choose>
+        				<when test = "idcard != null and !''.equals(idcard)">
+        						 idcard = #{idcard}
+        						<if test="oid != null and oid !=0">
+        							 and oid = #{oid}
+        						</if>
+        				</when>
+        				<otherwise>
+        					<if test="oid != null and oid !=0">
+        					 oid = #{oid} 
+        					</if>
+        				</otherwise>
+        			</choose>
+        		</otherwise>
+        	</choose>
+           <choose>
+        		<when test = "endTime != null and endTime != ' 23:59:59' ">
+        			<choose>
+        				<when test = " beginTime != null and beginTime != '' ">
+        					commitTime between #{beginTime} and #{endTime}
+        				</when>
+        				<otherwise>
+        					commitTime &lt;= #{endTime}
+        				</otherwise>
+        			</choose>
+        		</when>
+        		<otherwise>
+        			<if test = " beginTime != null and beginTime != '' ">
+        				commitTime &gt;= #{beginTime}
+        			</if>
+        		</otherwise>
+        	</choose>
+        	</where>
+        ORDER BY commitTime DESC
+        LIMIT #{startRow}, #{rowCount}
+    </select>
+    
+    <insert id="insertOrders" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="oid">
+        INSERT INTO orders(amount,uid) values(#{AmountToPrcie},#{uid})
+    </insert>
+    
+    <select id="selectMaxOid"  resultType="int">
+        SELECT max(oid) FROM orders
+    </select>
+    
+    <insert id="insertOrderlist"  parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="lid">
+        INSERT INTO orderlist(bid,bname,price,quantity,amount,oid) values(#{book.bid},#{book.bname},#{book.price},#{book.quantity},#{book.amount},#{maxOid})
+    </insert>
+    
+     <select id="selectBalance" parameterType="int" resultType="double">
+        SELECT balance FROM users WHERE uid = #{uid}
+    </select>
+    
+    <update id="updateBalance" parameterType="java.util.Map">
+        UPDATE users set balance = #{balance} WHERE uid = #{uid}
+    </update>
+    
+     <select id="getOrder" parameterType="int" resultMap="orders">
+        SELECT oid,commitTime,amount FROM orders WHERE oid = #{maxoid}
+    </select>
+
+</mapper>

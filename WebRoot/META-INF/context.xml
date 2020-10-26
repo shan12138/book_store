@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource name="jdbc/EBPDS"  
+        type="javax.sql.DataSource"  
+        driverClassName="com.mysql.jdbc.Driver" 
+        maxIdle="2" 
+        maxWait="5000" 
+        username="root" 
+        password="1140018327.Jy"  
+        url="jdbc:mysql://localhost:3306/EBP" 
+        maxActive="4"/>
+</Context>

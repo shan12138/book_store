@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hgd.ebp.dao.AdminMapper">
+	<resultMap type="com.hgd.ebp.domain.User" id="user">  
+		<result property="userName" column="username" /> 
+        <result property="idCard" column="idcard" /> 
+        <result property="telNo" column="telno" />  
+        <result property="regTime" column="regtime" /> 
+		<result property="uname" column="name"/>
+    </resultMap>
+    <resultMap type="com.hgd.ebp.domain.Admin" id="admin">  
+    </resultMap>
+	<select id="adminLogin" parameterType="admin" resultMap="admin">
+        select * from admin where
+        	adminname=#{name} and password=#{password};
+    </select>
+	
+	<update id="UpdateStatus" parameterType="java.util.Map">
+		update users set status = #{status}  where uid = #{uid} ;
+	</update>
+	
+	 <select id="getMaxCount" parameterType="com.hgd.ebp.state.UserQueryState" resultType="int">
+        SELECT count(uid) FROM users
+         <where>
+          <choose>
+        		<when test = "!''.equals(name) and name != null ">
+        			((( name = #{name} ) or ( username=#{name} ))
+        			<choose>
+        				<when test = "idCard != null and !''.equals(idCard)">
+        					and idcard = #{idCard}
+        					<choose>
+        						<when test="telNo != null and !''.equals(telNo)">
+        							 and telno = #{telNo} )
+        						</when>
+        						<otherwise>)</otherwise>
+        					</choose>
+        				</when>
+        				<otherwise>
+        					<if test="telNo != null and !''.equals(telNo)">
+        					 and telno = #{telNo} )
+        					</if>
+        					)
+        				</otherwise>
+        			</choose>
+        		</when>
+        		<otherwise>
+        			<choose>
+        				<when test = "idCard != null and !''.equals(idCard)">
+        						 idcard = #{idCard}
+        						<if test="telNo != null and !''.equals(telNo)">
+        							and telno = #{telNo}
+        						</if>
+        				</when>
+        				<otherwise>
+        					<if test="telNo != null and !''.equals(telNo)">
+        					 and telno = #{telNo}
+        					</if>
+        				</otherwise>
+        			</choose>
+        		</otherwise>
+        	</choose>
+          <choose>
+        		<when test = "endTime != null and endTime != ' 23:59:59' ">
+        			<choose>
+        				<when test = " startTime != null and startTime != '' ">
+        					regtime between #{startTime} and #{endTime}
+        				</when>
+        				<otherwise>
+        					regtime &lt;= #{endTime}
+        				</otherwise>
+        			</choose>
+        		</when>
+        		<otherwise>
+        			<if test = " startTime != null and startTime != '' ">
+        				regtime &gt;= #{startTime}
+        			</if>
+        		</otherwise>
+        	</choose>
+        </where>
+    </select>
+ 
+    <select id="queryByPage" parameterType="java.util.Map" resultMap="user">
+         SELECT * FROM users
+       <where>
+           	<choose>
+        		<when test = "!''.equals(name) and name != null ">
+        			((( name = #{name} ) or ( username=#{name} ))
+        			<choose>
+        				<when test = "idCard != null and !''.equals(idCard)">
+        					and idcard = #{idCard}
+        					<choose>
+        						<when test="telNo != null and !''.equals(telNo)">
+        							 and telno = #{telNo} )
+        						</when>
+        						<otherwise>)</otherwise>
+        					</choose>
+        				</when>
+        				<otherwise>
+        					<if test="telNo != null and !''.equals(telNo)">
+        					and telno = #{telNo}
+        					</if>
+        					)
+        				</otherwise>
+        			</choose>
+        		</when>
+        		<otherwise>
+        			<choose>
+        				<when test = "idCard != null and !''.equals(idCard)">
+        						 idcard = #{idCard}
+        						<if test="telNo != null and !''.equals(telNo)">
+        							 and telno = #{telNo}
+        						</if>
+        				</when>
+        				<otherwise>
+        					<if test="telNo != null and !''.equals(telNo)">
+        					 and telno = #{telNo}
+        					</if>
+        				</otherwise>
+        			</choose>
+        		</otherwise>
+        	</choose>
+           <choose>
+        		<when test = "endTime != null and endTime != ' 23:59:59' ">
+        			<choose>
+        				<when test = " startTime != null and startTime != '' ">
+        					regtime between #{startTime} and #{endTime}
+        				</when>
+        				<otherwise>
+        					regtime &lt;= #{endTime}
+        				</otherwise>
+        			</choose>
+        		</when>
+        		<otherwise>
+        			<if test = " startTime != null and startTime != '' ">
+        				regtime &gt;= #{startTime}
+        			</if>
+        		</otherwise>
+        	</choose>
+        	</where>
+        LIMIT #{startRow}, #{rowCount}
+    </select>
+</mapper>
